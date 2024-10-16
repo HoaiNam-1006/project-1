@@ -1,0 +1,30 @@
+Project1
+Cau 1
+csvsort -c release_date -r tmdb-movies.csv > sorte-movies.csv
+Cau 2
+csvsql --query "SELECT *FROM tmdb WHERE vote_average >7.5" --tables tmdb tmdb-movies.csv >highrate.csv
+Cau 3
+csvsort -c revenue -r tmdb-movies.csv > highestrevenue.csv
+head -n 2 temp.csv > highestrevenue.csv
+csvsort -c revenue tmdb-movies.csv > temp.csv
+head -n 2 temp.csv > lowestrevenue.csv
+Cau 4
+csvstat --sum -c revenue tmdb-movies.csv
+Cau 5
+csvsql --query "SELECT *, (revenue - budget) AS profit FROM tmdb" --tables tmdb tmdb-movies.csv > temp.csv
+csvsort -c profit -r temp.csv | head -n 11 > top10movies.csv
+Cau 6
+ten dao dien co nhieu bo phim nhat
+csvcut -c director tmdb-movies.csv | tail -n +2 | sort | uniq -c | sort -nr | head -n 1
+Ten dien vien dong phim nhieu nhat
+csvcut -c cast tmdb-movies.csv | tail -n +2 | grep -v '"' | tr '|' '\n' | sort | uniq -c | sort -nr | head -n 1
+Cau 7
+csvcut -c genres tmdb-movies.csv | tail -n +2 | grep -v '"' | tr '|' '\n' | sort | uniq -c
+Cau 8
+idea : 
+1. the loai phim nao dem la doanh thu cao nhat
+2. Dao dien nao co nhieu bo phim voi loi nhuan cao trong top 50
+3. Dien vien nao da dong nhieu phim nhat trong nam 2015
+...
+
+
